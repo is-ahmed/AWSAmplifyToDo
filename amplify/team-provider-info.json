@@ -10,6 +10,17 @@
             "StackName": "amplify-react1amplified-dev-131637",
             "StackId": "arn:aws:cloudformation:us-east-1:144923295032:stack/amplify-react1amplified-dev-131637/2d587d50-b4ac-11ea-a7f0-0e6f11df9e98",
             "AmplifyAppId": "d3lrhgsqitqvxy"
+        },
+        "categories": {
+            "auth": {
+                "react1amplifiedd019a620": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d3lrhgsqitqvxy",
+                    "type": "manual"
+                }
+            }
         }
     }
 }
