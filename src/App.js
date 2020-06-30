@@ -1,14 +1,13 @@
 /* src/App.js */
 import React, { useEffect, useState } from 'react'
-import { API, graphqlOperation, Auth } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify'
 import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries'
 import {withAuthenticator} from '@aws-amplify/ui-react'
-const initialState = { name: '', description: '', user: '' }
+const initialState = { name: '', description: ''}
 const App = () => {
   const [formState, setFormState] = useState(initialState)
   const [todos, setTodos] = useState([])
-  const [myTodos, setMyTodos] = useState([])
 
   useEffect(() => {
     fetchTodos()
@@ -22,22 +21,17 @@ const App = () => {
     try {
       const todoData = await API.graphql(graphqlOperation(listTodos))
       const todos = todoData.data.listTodos.items
-      let user = await Auth.currentAuthenticatedUser();
       setTodos(todos)
-      setMyTodos(todos.filter(todo => todo.user === user.username))
     } catch (err) { console.log('error fetching todos') }
   }
    
   async function addTodo() {
     try {
       if (!formState.name || !formState.description) return
-      let user = await Auth.currentAuthenticatedUser();
       const todo = { ...formState }
-      todo.user = user.username
       setTodos([...todos, todo])
       setFormState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
-      fetchTodos()
     } catch (err) {
       console.log('error creating todo:', err)
     }
@@ -60,7 +54,7 @@ const App = () => {
       />
       <button style={styles.button} onClick={addTodo}>Create Todo</button>
       {
-        myTodos.map((todo, index) => (
+        todos.map((todo, index) => (
           <div key={todo.id ? todo.id : index} style={styles.todo}>
             <p style={styles.todoName}>{todo.name}</p>
             <p style={styles.todoDescription}>{todo.description}</p>

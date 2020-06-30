@@ -6,10 +6,10 @@ export const getTodo = /* GraphQL */ `
     getTodo(id: $id) {
       id
       name
-      user
       description
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -23,10 +23,10 @@ export const listTodos = /* GraphQL */ `
       items {
         id
         name
-        user
         description
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

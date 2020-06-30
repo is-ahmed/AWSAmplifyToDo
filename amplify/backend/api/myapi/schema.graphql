@@ -1,6 +1,5 @@
-type Todo @model {
+type Todo @model @auth(rules: [{allow: owner}]){
   id: ID!
   name: String!
-  user: String!
   description: String
 }
